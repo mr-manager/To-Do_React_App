@@ -24,7 +24,7 @@ class Done extends React.Component {
                 <div>Done List</div>
                 <ul>
                     {this.state.doneItems.map((activity, index) =>
-                        <li key={index} id={index} onClick={this.passUpDoneItem}>
+                        <li key={index} id={index} onClick={this.passUpDoneItem} className="done" >
                             {activity}
                         </li>)
                     }
