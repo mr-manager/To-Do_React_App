@@ -169,7 +169,7 @@ class Header extends React.Component {
     render() {
         return (
             <div className="header">
-                <h1>Shia Says, Just Do It!</h1>
+                <h1>Just Do It! Productivity Manager</h1>
                 <div className="shiaHeaderImg"></div>
             </div>
         );
