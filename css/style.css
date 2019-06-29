@@ -4,6 +4,88 @@ body{
     background-color: lightcyan;
 }
 
+.container{
+    height: calc(100% - 50px);
+    width: 100%;
+    background-image: url(../images/shia-background.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.header{
+    height: 50px;
+    width: 100%;
+    background-color: cornflowerblue;
+    box-shadow: 6px 4px 5px 0px rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.shiaDoitImg{
+    height:45px;
+    width: 45px;
+    background-image: url(../images/shia-just-do-it.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.shiaHeaderImg{
+    height:40px;
+    width: 50px;
+    background-image: url(../images/Shia-header-pic.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.input-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.input-wrapper button{
+    height: 50px;
+    margin-left: 10px;
+    font-size: 21px;
+    margin-top: 25px; 
+}
+
+.textBox{
+    margin-top: 25px;
+    height: 50px;
+    width: 70%;
+    font-size: 24px;
+    opacity: .6;
+    background-color: gainsboro;
+    color: black;
+    text-align: center;
+}
+
+.listItem{
+    max-width: 50%;
+    height: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: cornflowerblue;
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin-bottom: 5px;
+    opacity: .8;
+}
+
+.list-title{
+    font-size: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin-left: 50px;
+}
+
 .done{
     text-decoration-line: line-through;
 }

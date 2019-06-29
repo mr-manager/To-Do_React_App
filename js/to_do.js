@@ -21,12 +21,12 @@ class Done extends React.Component {
     render() {
         return (
             <div>
-                <div>Done List</div>
+                <div className="list-title">Done List</div>
                 <ul>
                     {this.state.doneItems.map((activity, index) =>
-                        <li key={index} id={index} onClick={this.passUpDoneItem} className="done" >
+                        <div key={index} className="listItem done"><li id={index} onClick={this.passUpDoneItem}>
                             {activity}
-                        </li>)
+                        </li><spnan><i className="fas fa-trash-alt"></i></spnan></div>)
                     }
                 </ul>
             </div>
@@ -51,18 +51,17 @@ class ToDo extends React.Component {
 
     passDownDoneItem(e) {
         this.props.updateDoneItems(e.target.id);
-        console.log(e.target.id);
     }
 
     render() {
         return (
             <div>
-                <div>To Do List</div>
+                <div className="list-title">To Do List</div>
                 <ul>
                     {this.state.toDoArray.map((activity, index) =>
-                        <li key={index} id={index} onClick={this.passDownDoneItem}>
+                        <div key={index} className="listItem "><li id={index} onClick={this.passDownDoneItem}>
                             {activity}
-                        </li>)
+                        </li><spnan><i className="fas fa-trash-alt"></i></spnan></div>)
                     }
                 </ul>
             </div>
@@ -116,13 +115,16 @@ class Body extends React.Component {
     render() {
         return (
             <div className="container">
-                <input
-                    id="inputBox"
-                    placeholder="add item to list..."
-                    value={this.state.userInput}
-                    onChange={this.handleUserInput}
-                />
-                <button onClick={this.addToDoItem}> Add</button>
+                <div className="input-wrapper">
+                    <input
+                        id="inputBox"
+                        placeholder="add item to list..."
+                        value={this.state.userInput}
+                        onChange={this.handleUserInput}
+                        className="textBox"
+                    />
+                    <button onClick={this.addToDoItem}><div className="shiaDoitImg"></div></button>
+                </div>
                 <ToDo passToDoItems={this.state.toDoItems} updateDoneItems={this.addDoneItem} />
                 <Done passDoneItems={this.state.doneItems} updateToDoItems={this.returnDoneItem} />
             </div>
@@ -133,14 +135,12 @@ class Body extends React.Component {
 class Header extends React.Component {
     constructor(props) {
         super(props);
-
     }
-
     render() {
         return (
-            <div>
-                Header-
-                To Do: Make Header with Logo
+            <div className="header">
+                <h1>Shia Says, Just Do It!</h1>
+                <div className="shiaHeaderImg"></div>
             </div>
         );
     }
@@ -149,9 +149,7 @@ class Header extends React.Component {
 class App extends React.Component {
     constructor() {
         super();
-
     }
-
     render() {
         return (
             <div>
