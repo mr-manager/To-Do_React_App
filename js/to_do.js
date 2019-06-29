@@ -1,13 +1,34 @@
 class Done extends React.Component {
     constructor(props) {
         super(props);
+        this.passUpDoneItem = this.passUpDoneItem.bind(this);
+        this.state = {
+            doneItems: []
+        }
+    }
 
+    componentWillReceiveProps() {
+        this.setState({
+            doneItems: this.props.passDoneItems
+        });
+    }
+
+    passUpDoneItem(e) {
+        this.props.updateToDoItems(e.target.id);
+        console.log(e.target.id);
     }
 
     render() {
         return (
             <div>
-                Done list
+                <div>Done List</div>
+                <ul>
+                    {this.state.doneItems.map((activity, index) =>
+                        <li key={index} id={index} onClick={this.passUpDoneItem}>
+                            {activity}
+                        </li>)
+                    }
+                </ul>
             </div>
         );
     }
@@ -16,38 +37,33 @@ class Done extends React.Component {
 class ToDo extends React.Component {
     constructor(props) {
         super(props);
+        this.passDownDoneItem = this.passDownDoneItem.bind(this);
         this.state = {
-            userInput: "",
-            itemArray: []
+            toDoArray: []
         }
-        this.handleUserInput = this.handleUserInput.bind(this);
-        this.addItemToList = this.addItemToList.bind(this);
     }
-    handleUserInput(e) {
+
+    componentWillReceiveProps() {
         this.setState({
-            userInput: e.target.value
+            toDoArray: this.props.passToDoItems
         })
     }
 
-    addItemToList() {
-        this.state.itemArray.push(this.state.userInput);
-        this.setState({
-            userInput: ""
-        })
+    passDownDoneItem(e) {
+        this.props.updateDoneItems(e.target.id);
+        console.log(e.target.id);
     }
+
     render() {
-
         return (
             <div>
-                <input
-                    id="inputBox"
-                    placeholder="add item to list..."
-                    value={this.state.userInput}
-                    onChange={this.handleUserInput}
-                />
-                <button onClick={this.addItemToList}> Add</button>
+                <div>To Do List</div>
                 <ul>
-                    {this.state.itemArray.map((activity, index) => <li key={index}>{activity}</li>)}
+                    {this.state.toDoArray.map((activity, index) =>
+                        <li key={index} id={index} onClick={this.passDownDoneItem}>
+                            {activity}
+                        </li>)
+                    }
                 </ul>
             </div>
         );
@@ -57,14 +73,58 @@ class ToDo extends React.Component {
 class Body extends React.Component {
     constructor(props) {
         super(props);
+        this.handleUserInput = this.handleUserInput.bind(this);
+        this.addToDoItem = this.addToDoItem.bind(this);
+        this.addDoneItem = this.addDoneItem.bind(this);
+        this.returnDoneItem = this.returnDoneItem.bind(this);
+        this.state = {
+            userInput: "",
+            toDoItems: [],
+            doneItems: []
+        }
+    }
 
+    handleUserInput(e) {
+        this.setState({
+            userInput: e.target.value
+        });
+    }
+
+    addToDoItem() {
+        this.state.toDoItems.push(this.state.userInput);
+        this.setState({
+            userInput: ""
+        });
+    }
+
+    addDoneItem(input) {
+        var doneItem = this.state.toDoItems.splice(input, 1);
+        this.state.doneItems.push(doneItem);
+        this.setState({
+            userInput: ""
+        });
+    }
+
+    returnDoneItem(input) {
+        var toDoItem = this.state.doneItems.splice(input, 1);
+        this.state.toDoItems.push(toDoItem);
+        this.setState({
+            userInput: ""
+        });
     }
 
     render() {
         return (
             <div className="container">
-                <ToDo />
-                <Done />
+                <input
+                    id="inputBox"
+                    placeholder="add item to list..."
+                    value={this.state.userInput}
+                    onChange={this.handleUserInput}
+                />
+                <button onClick={this.addToDoItem}> Add</button>
+                <ToDo passToDoItems={this.state.toDoItems} updateDoneItems={this.addDoneItem} />
+                <Done passDoneItems={this.state.doneItems} updateToDoItems={this.returnDoneItem} />
             </div>
         );
     }
