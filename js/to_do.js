@@ -101,7 +101,7 @@ class Body extends React.Component {
         var doneItem = this.state.toDoItems.splice(input, 1);
         this.state.doneItems.push(doneItem);
         this.setState({
-            userInput: ""
+            doneItems: this.state.doneItems.flat()
         });
     }
 
@@ -109,7 +109,7 @@ class Body extends React.Component {
         var toDoItem = this.state.doneItems.splice(input, 1);
         this.state.toDoItems.push(toDoItem);
         this.setState({
-            userInput: ""
+            toDoItems: this.state.toDoItems.flat()
         });
     }
 
