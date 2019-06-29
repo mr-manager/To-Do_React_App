@@ -2,6 +2,7 @@ class Done extends React.Component {
     constructor(props) {
         super(props);
         this.passUpDoneItem = this.passUpDoneItem.bind(this);
+        this.deleteThisItem = this.deleteThisItem.bind(this);
         this.state = {
             doneItems: []
         }
@@ -18,6 +19,10 @@ class Done extends React.Component {
         console.log(e.target.id);
     }
 
+    deleteThisItem(e){
+        this.props.deleteDoneItem(e.target.id);
+    }
+
     render() {
         return (
             <div>
@@ -26,7 +31,7 @@ class Done extends React.Component {
                     {this.state.doneItems.map((activity, index) =>
                         <div key={index} className="listItem done"><li id={index} onClick={this.passUpDoneItem}>
                             {activity}
-                        </li><spnan><i className="fas fa-trash-alt"></i></spnan></div>)
+                        </li><spnan><i className="fas fa-trash-alt" onClick={this.deleteThisItem}></i></spnan></div>)
                     }
                 </ul>
             </div>
@@ -38,6 +43,7 @@ class ToDo extends React.Component {
     constructor(props) {
         super(props);
         this.passDownDoneItem = this.passDownDoneItem.bind(this);
+        this.deleteThisItem = this.deleteThisItem.bind(this);
         this.state = {
             toDoArray: []
         }
@@ -53,6 +59,10 @@ class ToDo extends React.Component {
         this.props.updateDoneItems(e.target.id);
     }
 
+    deleteThisItem(e){
+        this.props.deleteToDoItem(e.target.id);
+    }
+
     render() {
         return (
             <div>
@@ -61,7 +71,7 @@ class ToDo extends React.Component {
                     {this.state.toDoArray.map((activity, index) =>
                         <div key={index} className="listItem "><li id={index} onClick={this.passDownDoneItem}>
                             {activity}
-                        </li><spnan><i className="fas fa-trash-alt"></i></spnan></div>)
+                        </li><spnan><i className="fas fa-trash-alt" onClick={this.deleteThisItem} ></i></spnan></div>)
                     }
                 </ul>
             </div>
@@ -76,6 +86,8 @@ class Body extends React.Component {
         this.addToDoItem = this.addToDoItem.bind(this);
         this.addDoneItem = this.addDoneItem.bind(this);
         this.returnDoneItem = this.returnDoneItem.bind(this);
+        this.deleteToDoItem = this.deleteToDoItem.bind(this);
+        this.deleteDoneItem = this.deleteDoneItem.bind(this);
         this.state = {
             userInput: "",
             toDoItems: [],
@@ -112,6 +124,18 @@ class Body extends React.Component {
         });
     }
 
+    deleteToDoItem(input){
+        this.setState({
+            toDoItems: this.state.toDoItems.splice(input, 1)
+        })
+    }
+
+    deleteDoneItem(input){
+        this.setState({
+            doneItems: this.state.doneItems.splice(input, 1)
+        })
+    }
+
     render() {
         return (
             <div className="container">
@@ -125,8 +149,14 @@ class Body extends React.Component {
                     />
                     <button onClick={this.addToDoItem}><div className="shiaDoitImg"></div></button>
                 </div>
-                <ToDo passToDoItems={this.state.toDoItems} updateDoneItems={this.addDoneItem} />
-                <Done passDoneItems={this.state.doneItems} updateToDoItems={this.returnDoneItem} />
+                <ToDo passToDoItems={this.state.toDoItems} 
+                updateDoneItems={this.addDoneItem} 
+                deleteToDoItem={this.deleteToDoItem}
+                />
+                <Done passDoneItems={this.state.doneItems} 
+                updateToDoItems={this.returnDoneItem} 
+                deleteDoneItem={this.deleteDoneItem}
+                />
             </div>
         );
     }
