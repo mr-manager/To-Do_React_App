@@ -16,10 +16,9 @@ class Done extends React.Component {
 
     passUpDoneItem(e) {
         this.props.updateToDoItems(e.target.id);
-        console.log(e.target.id);
     }
 
-    deleteThisItem(e){
+    deleteThisItem(e) {
         this.props.deleteDoneItem(e.target.id);
     }
 
@@ -52,14 +51,14 @@ class ToDo extends React.Component {
     componentWillReceiveProps() {
         this.setState({
             toDoArray: this.props.passToDoItems
-        })
+        });
     }
 
     passDownDoneItem(e) {
         this.props.updateDoneItems(e.target.id);
     }
 
-    deleteThisItem(e){
+    deleteThisItem(e) {
         this.props.deleteToDoItem(e.target.id);
     }
 
@@ -88,10 +87,12 @@ class Body extends React.Component {
         this.returnDoneItem = this.returnDoneItem.bind(this);
         this.deleteToDoItem = this.deleteToDoItem.bind(this);
         this.deleteDoneItem = this.deleteDoneItem.bind(this);
+        this.undoDelete = this.undoDelete.bind(this);
         this.state = {
             userInput: "",
             toDoItems: [],
-            doneItems: []
+            doneItems: [],
+            deletedItems: []
         }
     }
 
@@ -124,16 +125,28 @@ class Body extends React.Component {
         });
     }
 
-    deleteToDoItem(input){
+    deleteToDoItem(input) {
+        var deletedItem = this.state.toDoItems.splice(input, 1);
+        this.state.deletedItems.push(deletedItem);
         this.setState({
-            toDoItems: this.state.toDoItems.splice(input, 1)
-        })
+            deletedItems: this.state.deletedItems.flat()
+        });
     }
 
-    deleteDoneItem(input){
+    deleteDoneItem(input) {
+        var deletedItem = this.state.doneItems.splice(input, 1);
+        this.state.deletedItems.push(deletedItem);
         this.setState({
-            doneItems: this.state.doneItems.splice(input, 1)
-        })
+            deletedItems: this.state.deletedItems.flat()
+        });
+    }
+
+    undoDelete() {
+        if (this.state.deletedItems.length >= 1) {
+            var undoneDeletedItem = this.state.deletedItems.pop();
+            this.state.toDoItems.push(undoneDeletedItem);
+            this.forceUpdate();
+        };
     }
 
     render() {
@@ -147,15 +160,16 @@ class Body extends React.Component {
                         onChange={this.handleUserInput}
                         className="textBox"
                     />
-                    <button onClick={this.addToDoItem}><div className="shiaDoitImg"></div></button>
+                    <button onClick={this.addToDoItem}><i className="fas fa-plus"></i></button>
+                    <button onClick={this.undoDelete}><i className="fas fa-undo"></i></button>
                 </div>
-                <ToDo passToDoItems={this.state.toDoItems} 
-                updateDoneItems={this.addDoneItem} 
-                deleteToDoItem={this.deleteToDoItem}
+                <ToDo passToDoItems={this.state.toDoItems}
+                    updateDoneItems={this.addDoneItem}
+                    deleteToDoItem={this.deleteToDoItem}
                 />
-                <Done passDoneItems={this.state.doneItems} 
-                updateToDoItems={this.returnDoneItem} 
-                deleteDoneItem={this.deleteDoneItem}
+                <Done passDoneItems={this.state.doneItems}
+                    updateToDoItems={this.returnDoneItem}
+                    deleteDoneItem={this.deleteDoneItem}
                 />
             </div>
         );

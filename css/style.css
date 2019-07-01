@@ -33,6 +33,7 @@ body{
     background-image: url(../images/shia-just-do-it.png);
     background-size: cover;
     background-repeat: no-repeat;
+    justify-content: center;
 }
 
 .shiaHeaderImg{
@@ -50,6 +51,7 @@ body{
 
 .input-wrapper button{
     height: 50px;
+    width: 50px;
     margin-left: 10px;
     font-size: 21px;
     margin-top: 25px; 
